@@ -1,0 +1,20 @@
+import atproto
+import json
+
+from atproto import Client
+client = Client()
+
+client.login('#####.bsky.social', '#####')
+
+data = client.get_timeline(cursor='', limit=5)
+
+feed = data.feed
+next_page = data.cursor
+
+print(data)
+
+for post in feed:
+    author = post.post.author.display_name
+    handle = post.post.author.handle
+    text = post.post.record.text
+    print(f"{author} (@{handle}): {text}\n")
