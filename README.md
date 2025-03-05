@@ -11,7 +11,7 @@ Hi there! I'm Charles, a passionate tech enthusiast diving into **Networking, Da
 ## 🚀 Projects
 🔹 **Networking:** [Coming Soon]  
 🔹 **Data Science:** [Coming Soon]  
-🔹 **API Development:** [Bluesky API Call](https://github.com/cis379.github.io/blob/main/Bluesky%20API%20Cal)  
+🔹 **API Development:** [Bluesky API Call](https://github.com/cis379.github.io/blob/main/Bluesky%20API%20Call)  
 🔹 **Cybersecurity:** [Coming Soon]  
 
 ---
