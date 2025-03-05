@@ -11,7 +11,8 @@ Hi there! I'm Charles, a passionate tech and online safety expert diving into **
 ## 🚀 Projects
 🔹 **Networking:** [Coming Soon]  
 🔹 **Data Science:** [Coming Soon]  
-🔹 **API Development:** [Coming Soon]  
+🔹 **API Development:** [Coming Soon] 
+- Sample API Call: Bluesky API Call
 🔹 **Cybersecurity:** [Coming Soon]  
 
 ---
