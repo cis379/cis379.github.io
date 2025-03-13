@@ -6,20 +6,15 @@ Charles S's Research Projects
 
 Hi there! I'm Charles, a passionate tech enthusiast diving into **Networking, Data Science, API Development, and Cybersecurity**. This repository serves as my digital portfolio, showcasing my projects, learning journey, and technical explorations.
 
----
-
-## 🚀 Projects
-🔹 **Networking:** [Coming Soon]  
-🔹 **Data Science:** [Coming Soon]  
-🔹 **API Development:** [Bluesky API Call](https://github.com/cis379.github.io/blob/main/Bluesky%20API%20Call)  
-🔹 **Cybersecurity:** [Coming Soon]  
+## 🔍 About Me
+- 💻 Former Army Ranger, Intelligence Expert, and Twitter Trust and Safety Alum
+- 📚 Building new products for information security
+- 🌎 Open to collaboration on interesting ideas.
 
 ---
 
 ## 📫 Connect with Me
-- LinkedIn: [Your LinkedIn](#)
-- GitHub: [Your GitHub](#)
-- Blog/Website: [Your Website](#)
+- LinkedIn: [https://www.linkedin.com/in/charles-alexander-smith/](#)
 
 ---
 
