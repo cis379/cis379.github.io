@@ -1,0 +1,26 @@
+import json
+
+import openai
+from openai import OpenAI
+
+client = OpenAI()
+
+openai.api_key = "###A"
+
+user_input = input("Please enter the text to be evaluated: ")
+
+completion = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "You are an evaluator of users content. You will only return either a 1 for whether the users content is positive, and a 2 if it's negative"},
+        {
+            "role": "user",
+            "content": user_input
+        }
+    ]
+)
+formatted_output = json.dumps(completion.model_dump(), indent=4)
+
+print(formatted_output)
+
+print("1 positive, 2 negative: ", completion.choices[0].message.content)
