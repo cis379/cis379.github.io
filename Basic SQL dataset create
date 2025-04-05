@@ -1,0 +1,44 @@
+pip install atproto sqlite3
+
+from atproto import Client
+import sqlite3
+
+# --- Connect to Bluesky ---
+client = Client()
+client.login('allthespills@bluesky.social', password)  
+
+# --- Fetch recent hot posts (simulate by searching popular posts) ---
+feed = client.app.bsky.feed.get_timeline(limit=100)
+posts = feed['feed']
+
+# --- SQLite Setup ---
+conn = sqlite3.connect('bluesky_posts.db')
+cursor = conn.cursor()
+cursor.execute('''
+    posts (
+        id TEXT PRIMARY KEY,
+        text TEXT,
+        author TEXT,
+        reposts INTEGER
+    )
+''')
+
+# --- Store Data ---
+for post in posts:
+    try:
+        record = post['post']
+        post_id = record['uri']
+        text = record['record']['text']
+        author = record['author']['handle']
+        reposts = record['post']['repostCount'] if 'repostCount' in record['post'] else 0
+
+        cursor.execute('''
+            INSERT OR IGNORE INTO posts (id, text, author, reposts)
+            VALUES (?, ?, ?, ?)
+        ''', (post_id, text, author, reposts))
+    except Exception as e:
+        print(f"Skipping post due to error: {e}")
+
+conn.commit()
+conn.close()
+print("Done: 100 posts saved.")
