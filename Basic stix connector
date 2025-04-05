@@ -1,0 +1,61 @@
+import requests
+import mysql.connector
+from stix2 import parse
+
+# MITRE ATT&CK STIX bundle
+CTI_FEED_URL = "https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json"
+
+DB_CONFIG = {
+    'host': 'cis379',
+    'user': 'cis379_user',
+    'password': defined,
+    'database': 'cti_db'
+}
+
+def connect_db():
+    return mysql.connector.connect(**DB_CONFIG)
+
+def create_tables(cursor):
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS attack_techniques (
+            id VARCHAR(64) PRIMARY KEY,
+            name VARCHAR(255),
+            description TEXT,
+            kill_chain_phase VARCHAR(255),
+            created TIMESTAMP
+        )
+    """)
+
+def fetch_stix():
+    response = requests.get(CTI_FEED_URL)
+    response.raise_for_status()
+    return parse(response.text, allow_custom=True)
+
+def store_techniques(objects, cursor):
+    for obj in objects:
+        if obj.type == "attack-pattern":
+            kill_chain = ""
+            if obj.kill_chain_phases:
+                kill_chain = ", ".join([phase.phase_name for phase in obj.kill_chain_phases])
+
+            cursor.execute("""
+                INSERT IGNORE INTO attack_techniques (id, name, description, kill_chain_phase, created)
+                VALUES (%s, %s, %s, %s, %s)
+            """, (obj.id, obj.name, obj.description, kill_chain, obj.created))
+
+def main():
+    conn = connect_db()
+    cursor = conn.cursor()
+    create_tables(cursor)
+
+    stix_bundle = fetch_stix()
+    if hasattr(stix_bundle, "objects"):
+        store_techniques(stix_bundle.objects, cursor)
+        conn.commit()
+        print("MITRE ATT&CK techniques stored.")
+
+    cursor.close()
+    conn.close()
+
+if __name__ == "__main__":
+    main()
