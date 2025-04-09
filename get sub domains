@@ -1,0 +1,54 @@
+CREATE TABLE websites (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    domain VARCHAR(255),
+    subdomains TEXT
+);
+
+
+
+pip install requests mysql-connector-python
+
+
+import requests
+import mysql.connector
+import json
+
+# Connect to MySQL
+conn = mysql.connector.connect(
+    host='XXXX',
+    user='XXX',
+    password='XXX',
+    database='XXX'
+)
+cursor = conn.cursor()
+
+# Get domains from DB
+cursor.execute("SELECT id, domain FROM websites WHERE subdomains IS NULL")
+rows = cursor.fetchall()
+
+for row in rows:
+    id, domain = row
+    print(f"Checking subdomains for: {domain}")
+
+    # Query crt.sh
+    url = f"https://crt.sh/?q=%25.{domain}&output=json"
+    try:
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            subdomains = set(entry['name_value'] for entry in data)
+            subdomains = {sub.replace('\n', '') for sub in subdomains if sub.endswith(domain)}
+
+            # Convert set to comma-separated string
+            subdomain_str = ', '.join(sorted(subdomains))
+
+            # Update DB
+            cursor.execute("UPDATE websites SET subdomains = %s WHERE id = %s", (subdomain_str, id))
+            conn.commit()
+        else:
+            print(f"Failed to fetch for {domain}: HTTP {response.status_code}")
+    except Exception as e:
+        print(f"Error processing {domain}: {e}")
+
+cursor.close()
+conn.close()
