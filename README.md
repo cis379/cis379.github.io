@@ -17,6 +17,10 @@ Hi there! I'm Charles, a passionate tech enthusiast diving into **Networking, Da
 
 This a conceptual overview of my personal home lab environment, designed for cybersecurity practice, learning, and experimentation.
 
+
+![image](https://github.com/user-attachments/assets/140c3e57-85f2-4aff-a231-d8f36c8f0731)
+
+
 ### Core Components:
 
 1.  **Home Router:**
